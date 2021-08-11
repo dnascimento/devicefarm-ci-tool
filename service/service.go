@@ -40,6 +40,18 @@ func (p *DeviceFarmRun) GetProjectArn() string {
 	return arn
 }
 
+// GetProjectArn returns project ARN by project name
+func (p *DeviceFarmRun) NewProject() string {
+	timeout := int64(30)
+	params := &devicefarm.CreateProjectInput{
+		Name:                     &p.Project,
+		DefaultJobTimeoutMinutes: &timeout,
+	}
+	resp, err := p.Client.CreateProject(params)
+	errors.Validate(err, "Failed to get create new project")
+	return *resp.Project.Arn
+}
+
 // CreateUpload creates pre-signed S3 URL for upload
 func (p *DeviceFarmRun) CreateUpload(appPath string) (string, string) {
 	var appType string

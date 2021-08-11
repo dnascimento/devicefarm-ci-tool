@@ -68,7 +68,8 @@ func runJob(client devicefarmiface.DeviceFarmAPI, config *model.RunConfig) ([]*m
 	}
 
 	if svc.GetProjectArn() == "" {
-		log.Fatal("Application finished, because it can't retrieve project ARN")
+		log.Println("Can't retrieve project arn, creating new project")
+		svc.NewProject()
 	}
 
 	if *useRandomDevicePool {
