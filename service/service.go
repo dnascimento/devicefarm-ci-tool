@@ -110,6 +110,7 @@ func (p *DeviceFarmRun) RunWithConfig() (string, string) {
 	params.DevicePoolArn = aws.String(p.DeviceArn)
 	params.AppArn = aws.String(p.AppArn)
 	log.Println("Starting job ...")
+	log.Println(params)
 	resp, err := p.Client.ScheduleRun(params)
 	errors.Validate(err, "Failed to run tests")
 	log.Println("Run ARN:", *resp.Run.Arn)
